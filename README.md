@@ -1,2 +1,3 @@
 # games <br>
-currently just making repo, give me what? 3 days
+tic-tac-toe if it was played by 2 easy bots
+
