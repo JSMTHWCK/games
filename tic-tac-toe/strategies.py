@@ -76,7 +76,7 @@ class Strategies:
             elif i in self.edges:
                 return 4
         '''-------------- player 1 turn 2 ended ----------------'''
-
+    
         if len(self.is_almost_end(board)[0]) != 0:
             return self.is_almost_end(board)[0][0]
         elif len(self.is_almost_end(board)[1]) != 0:
@@ -84,3 +84,5 @@ class Strategies:
         for corner in self.corners:
             if board[corner] == 0:
                 return corner
+        else:
+            return self.possible_moves(board)[0]
