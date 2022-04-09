@@ -10,6 +10,7 @@ class Strategies:
         self.corners = [0,2,6,8]
         self.edges = [1,3,5,7]
         self.middle = [4]
+        self.p_turn = None
 
     def is_end_copy(self,board):
         for i in range(0,3):
@@ -58,12 +59,20 @@ class Strategies:
 
     def custom(self,board):
         #for player 1 only
+        #print(self.possible_moves(board))
+        #print(self.p_turn)
         if self.start == True: #if it's players first turn
             self.p_turn = 1 if board == [0 for i in board] else 2 #player 1 or 2
         if self.p_turn == 1 and self.start == True:
             self.start = False
             return 8 #takes corner
-        '''-------------- player 1 turn 1 ended ----------------'''
+        if self.p_turn == 2 and self.start == True:
+            self.start = False
+            if board[4] == 0:
+                return 4
+            else:
+                return 8
+        '''-------------- set = 1 ended ----------------'''
         if self.p_turn == 1 and len(self.possible_moves(board)) == 9 - 2:
             i = board.index(self.p_turn+1)
             if i in self.middle:
@@ -75,14 +84,26 @@ class Strategies:
                     return 8 - i
             elif i in self.edges:
                 return 4
-        '''-------------- player 1 turn 2 ended ----------------'''
-    
-        if len(self.is_almost_end(board)[0]) != 0:
-            return self.is_almost_end(board)[0][0]
-        elif len(self.is_almost_end(board)[1]) != 0:
-            return self.is_almost_end(board)[1][0]
-        for corner in self.corners:
-            if board[corner] == 0:
-                return corner
-        else:
-            return self.possible_moves(board)[0]
+        
+        '''-------------- set = 2 ended ----------------'''
+      #print(self.p_turn)
+        if self.p_turn == 1:
+            if len(self.is_almost_end(board)[0]) != 0:
+                return self.is_almost_end(board)[0][0]
+            elif len(self.is_almost_end(board)[1]) != 0:
+                return self.is_almost_end(board)[1][0]
+            for corner in self.corners:
+                if board[corner] == 0:
+                    return corner
+            else:
+                return self.possible_moves(board)[0]
+        if self.p_turn == 2:
+            if len(self.is_almost_end(board)[1]) != 0:
+                return self.is_almost_end(board)[1][0]
+            elif len(self.is_almost_end(board)[0]) != 0:
+                return self.is_almost_end(board)[0][0]
+            for corner in self.corners:
+                if board[corner] == 0:
+                    return corner
+            else:
+                return self.possible_moves(board)[0]
