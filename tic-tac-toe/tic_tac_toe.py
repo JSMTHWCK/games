@@ -1,14 +1,11 @@
 import random
 from strategies import *
-class Player:
-    def __init__(self,p_id,strat):
-        self.id = p_id
-        self.strat = strat
+from helpers import *
 
 class Game:
     def __init__(self,strat1,strat2):
-        self.player1 = Player(1,strat1)
-        self.player2 = Player(2,strat2)
+        self.player1 = strat1
+        self.player2 = strat2
         self.players = [self.player1,self.player2]
         self.turn = 0
         self.board = [0 for i in range(0,9)]
@@ -31,16 +28,9 @@ class Game:
         return False
 
     def make_move(self,player):
-        #p_id comes through as self.player1
-        pstrat = player.strat
-        a = pstrat.types[pstrat.strat_type](self.board)
-        if a == None:
-            print(pstrat.strat_type)
-            print(pstrat.types)
-            print(pstrat.types[pstrat.strat_type](self.board))
-            print(pstrat.types['custom'](self.board))
-            print(self.board)
-        self.board[a] = player.id
+
+        a = self.players[self.turn].choose_move(list(self.board))
+        self.board[a] = self.turn + 1
 
 
     def game(self,log = False):
