@@ -1,7 +1,6 @@
 import random
 class strat1:
     def choose_move(self,board):
-        print('hi')
         for j in range(3):
             i = 3 * j
             if board[j] == board[j + 3] != 0 and board[j + 6] == 0:  # columns

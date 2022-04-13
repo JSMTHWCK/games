@@ -21,7 +21,14 @@ def possible_moves(board):
         if board[i] == 0:
             empty_spaces.append(i)
     return empty_spaces
-    
+
+def find_all(i,board):
+    spaces = []
+    for a in range(0,len(board)):
+        if board[a] == i:
+            spaces.append(a)
+    return spaces
+
 def is_almost_end(board):
     empty_spaces = possible_moves(board)
     p_one = []
@@ -35,3 +42,12 @@ def is_almost_end(board):
             if is_end_copy(tboard) not in ['Tie',False]:
                 ends[b-1].append(i)
     return ends
+
+def print_board(array):
+    a = 1
+    board = [0 for i in range(9)]
+    for i in array:
+        board[i] = a
+        a = a%2+1
+    print(f'{board[0]} {board[1]} {board[2]}\n{board[3]} {board[4]} {board[5]}\n{board[6]} {board[7]} {board[8]}')
+    print('')

@@ -9,6 +9,7 @@ class Game:
         self.players = [self.player1,self.player2]
         self.turn = 0
         self.board = [0 for i in range(0,9)]
+        self.moves =[]
 
 
     def is_end(self):
@@ -30,6 +31,7 @@ class Game:
     def make_move(self,player):
 
         a = self.players[self.turn].choose_move(list(self.board))
+        self.moves.append(a)
         self.board[a] = self.turn + 1
 
 
@@ -46,5 +48,4 @@ class Game:
 
             p_turn = self.players[self.turn]
             self.make_move(p_turn)
-
             self.turn = (self.turn + 1)%2
