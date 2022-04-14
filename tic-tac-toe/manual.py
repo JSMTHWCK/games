@@ -1,6 +1,6 @@
 from random import randrange
 
-def manual(self, board):
+def manual_move(board):
     print('choose location ')
     x = int(input())
     while board[x] != 0:
