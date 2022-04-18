@@ -31,8 +31,12 @@ class Game:
     def make_move(self,player):
 
         a = self.players[self.turn].choose_move(list(self.board))
+        if type(a) is tuple:
+            a = list(a)
+            a = a[0] * 3 + a[1]
         self.moves.append(a)
-        self.board[a] = self.turn + 1
+        if self.board[a] == 0:
+            self.board[a] = self.turn + 1
 
 
     def game(self,log = False):

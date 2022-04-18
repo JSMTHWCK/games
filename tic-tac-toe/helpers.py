@@ -51,3 +51,10 @@ def print_board(array):
         a = a%2+1
     print(f'{board[0]} {board[1]} {board[2]}\n{board[3]} {board[4]} {board[5]}\n{board[6]} {board[7]} {board[8]}')
     print('')
+
+def sum_of_values(list):
+    values = list(list.values())
+    a = 0
+    for i in values:
+        a += int(i)
+    return a

@@ -49,13 +49,11 @@ def elias(board):
         elif board[8] == 0:
             return 8
 
-
     if player_number == 2:
 
         if board[4] == 0:
             return 4
-
-        if board[1] == 0:
+        elif board[1] == 0:
             return 1
         elif board[3] == 0:
             return 3
