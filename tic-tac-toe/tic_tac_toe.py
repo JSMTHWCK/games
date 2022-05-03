@@ -1,5 +1,4 @@
 import random
-from strategies import *
 from helpers import *
 
 class Game:
