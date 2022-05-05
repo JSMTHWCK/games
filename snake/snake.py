@@ -33,7 +33,7 @@ class Game:
             return True
         return False
     def make_move(self):
-        return self.strat()
+        return self.strat(self.board)
     def game(self):
         self.random_berry()
         while True:
