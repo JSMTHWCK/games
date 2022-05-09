@@ -1,5 +1,5 @@
 # games <br>
-tic-tac-toe : done
-connect four : strategies are hard
-snake : snake
+tic-tac-toe : done <br>
+connect four : strategies are hard <br>
+snake : snake <br>
 
