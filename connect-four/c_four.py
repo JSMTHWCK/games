@@ -1,10 +1,10 @@
-from manual import *
+from player import *
 class Game:
     def __init__(self,p_one, p_two):
-        self.players = [p_one,p_two]
+        self.strats = [p_one,p_two]
+        self.players = [Player(p_one),Player(p_two)]
         self.turn = 0
         self.board = [0 for i in range(42)]
-
     def convert_to_nest(self,board):
         arr = []
         for a in range(0,6):
@@ -17,13 +17,15 @@ class Game:
         a = self.convert_to_nest(self.board)
         for i in a:
             print(i)
+        print('')
             
     def make_move(self,turn):
-        a = int(self.players[turn](list(self.board)))
+        a = int(self.players[turn].types[self.strats[turn]](list(self.board)))
         for i in range(5,-1,-1):
             if self.board[i*7 + a] == 0:
                 self.board[i*7 + a] = turn + 1
                 break
+    
     def is_end(self):
         nest_board = self.convert_to_nest(list(self.board))
         #horizontal
@@ -70,5 +72,5 @@ class Game:
                 return self.is_end()
             self.make_move(self.turn)
             self.turn = (self.turn + 1)%2
-a = Game(manual,manual)
+a = Game('manual','manual')
 print(a.game(log = True))
