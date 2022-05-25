@@ -1,12 +1,15 @@
 import random as rng
 from manual import manual
+from custom import *
 class Game:
     def __init__(self,strat):
         self.strat = strat
         self.board = [['-' for i in range(0,10)] for i in range(0,10)]
         self.berries = 3
-        self.snake = [(5,1),(5,2),(5,3)]
+        self.snake = [(4,1),(4,2),(4,3)]
         self.berry_location = None
+        self.moves = {}
+        
     def random_berry(self):
         open_spaces = []
         for i in range(0,10):
@@ -42,13 +45,17 @@ class Game:
                 for j in range(0,10):
                     self.board[i][j] = '-'
             #update berry
-            self.board[self.berry_location[0]][self.berry_location[1]] = 'x'
+            self.board[self.berry_location[0]][self.berry_location[1]] = 'b'
             #update snake
-            for i in self.snake:
-                self.board[i[0]][i[1]] = 'O'
+            for i in self.snake[:-1]:
+                self.board[i[0]][i[1]] = 'o'
+            i = self.snake[-1]
+            self.board[i[0]][i[1]] = 'e'
             #prints board
+
             for i in self.board:
                 print(i)
+            print('')
             move = self.make_move()
             mv = None
             if move == 'w':
@@ -60,12 +67,15 @@ class Game:
             elif move == 'd':
                 mv = (self.snake[-1][0],self.snake[-1][1] + 1)
             self.snake.append(mv)
+            self.moves[mv] =move
+            self.snake = self.snake[-self.berries:]
             if self.is_end() == True:
                 return self.berries
-            self.snake = self.snake[-self.berries:]
             if self.berry_location in self.snake:
                 self.berries += 1
+                print(self.berries)
                 self.random_berry()
 
 a = Game(manual)
 print(a.game())
+

@@ -37,7 +37,6 @@ class TicTacToeTree:
         queue = [self.nodes_by_id[0]]
         node_num = 0
         while len(queue) != 0:
-            print(len(queue))
             last_node = queue[0]
             last_move = list(last_node.board)
             queue.pop(0)
