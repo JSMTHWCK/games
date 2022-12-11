@@ -58,3 +58,5 @@ def sum_of_values(list):
     for i in values:
         a += int(i)
     return a
+
+print(possible_moves([1,2,2,1,2,1,2,0]))

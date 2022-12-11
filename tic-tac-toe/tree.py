@@ -21,7 +21,7 @@ class TicTacToeTree:
 
                 new_board = list(last_move)
                 new_board[i] = self.move
-                self.nodes_by_id[node_num] = Node(node_num,new_board)
+                self.nodes_by_id[node_num] = Node(node_num,new_board,last_node.depth + 1)
                 
                 #adding children and parents
                 self.nodes_by_id[node_num].parents.append(last_node)
@@ -47,7 +47,7 @@ class TicTacToeTree:
                 if new_board not in boards:
                     boards.append(new_board)
                     node_num += 1
-                    self.nodes_by_id[node_num] = Node(node_num,new_board)
+                    self.nodes_by_id[node_num] = Node(node_num,new_board,last_node.depth + 1)
                     #children and parents
                     self.nodes_by_id[node_num].parents.append(last_node)
                     last_node.children.append(self.nodes_by_id[node_num])
@@ -58,14 +58,15 @@ class TicTacToeTree:
                     
         
 class Node:
-    def __init__(self,node_id,board):
+    def __init__(self,node_id,board,depth = 0):
         self.id = node_id
         self.board = board
         self.parents = []
         self.children = []
+        self.depth = depth
 
 a = TicTacToeTree()
-a.node_tree()
+a.recombining_node_tree()
 print(len(a.nodes_by_id))
 '''boards = []
 failed = []

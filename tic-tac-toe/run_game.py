@@ -29,8 +29,8 @@ score = {'Player 1':0,'Player 2':0,'Tie':0}
 score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
 
 for i in range(0,100):
-    a = Game(Player(jeff),Player(christine))
-    b = Game(Player(christine),Player(jeff))
+    a = Game(Player(jeff),Player(random_move))
+    b = Game(Player(random_move),Player(jeff))
 
     score[a.game(log = True)] += 1
     score2[b.game(log = True)] += 1

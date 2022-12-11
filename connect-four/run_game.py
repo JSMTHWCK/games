@@ -9,6 +9,15 @@ str_random = random()
 
 outcomes = {'Tie ':0, '1' : 0, '2' : 0}
 
-a = Game(str_custom,str_random)
-for i in range(100):
-    a.game(log = True)
+for i in range(1000):
+    a = Game(str_custom,str_random)
+    outcomes[a.game()] += 1
+
+outcomes2 = {'Tie':0, '1' : 0, '2':0}
+for i in range(1000):
+    a = Game(str_random,str_custom)
+    outcomes2[a.game()] += 1
+
+
+print(outcomes)
+print(outcomes2)
