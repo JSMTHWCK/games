@@ -55,6 +55,31 @@ class TicTacToeTree:
                     if ttt.is_end_copy(new_board) == False:
                         queue.append(self.nodes_by_id[node_num])
 
+    def recursion_recombining_node_tree(self,remaining_depth = 12, node_id = 0):
+        if node_id == 0:
+            self.nodes_by_id = {}
+            self.nodes_by_id[0] = Node(0,[0 for i in range(0,9)])
+            self.nodes_by_state = {}
+            self.nodes_by_state[str([0 for i in range(0,9)])] = 0
+        #conditional checks
+        if remaining_depth != 0 and ttt.is_end_copy(self.nodes_by_id[node_id].board) == False:
+            node = self.nodes_by_id[node_id]
+            last_move = list(node.board)
+            for i in ttt.possible_moves(last_move):
+                self.move = 1 if len(ttt.find_all(1,last_move)) == len(ttt.find_all(2,last_move)) else 2
+                new_board = list(last_move)
+                new_board[i] = self.move
+                if str(new_board) in self.nodes_by_state:
+                    duplicate_node_id = self.nodes_by_state[str(new_board)]
+                    self.nodes_by_id[duplicate_node_id].parents.append(node_id)
+                    node.children.append(duplicate_node_id)
+                else:
+                    new_node_id = len(self.nodes_by_id)
+                    self.nodes_by_id[new_node_id] = Node(new_node_id,new_board,node.depth + 1)
+                    self.nodes_by_state[str(new_board)] = new_node_id
+                    self.nodes_by_id[new_node_id].parents.append(node_id)
+                    node.children.append(new_node_id)
+                    self.recursion_recombining_node_tree(remaining_depth - 1, new_node_id)
                     
         
 class Node:
@@ -66,7 +91,7 @@ class Node:
         self.depth = depth
 
 a = TicTacToeTree()
-a.recombining_node_tree()
+a.recursion_recombining_node_tree()
 print(len(a.nodes_by_id))
 '''boards = []
 failed = []

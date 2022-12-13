@@ -5,11 +5,11 @@ def get_key(dict,val):
         return key
 
 class minimax:
-    def __init__(self,tree,player):
+    def __init__(self,tree):
         self.tree = tree
-        self.player = player
+        tree.recursion_recombining_node_tree()
         self.nodes_by_id = tree.nodes_by_id
-        self.nodes_by_state = {}
+        self.nodes_by_state = tree.nodes_by_state
 
     def find_key_by_value(self,dict,val):
         for key, value in dict.items():
@@ -28,14 +28,13 @@ class minimax:
             nodes_by_depth[node_depth].append(nodes_by_id[node])
         return nodes_by_depth
             
-    def fit(self,turn):
+    def fit(self):
         breakpoint = 0
         self.nodes_by_id = self.tree.nodes_by_id
         nodes_by_depth = self.sort_node_by_depth(self.nodes_by_id)
         for state in nodes_by_depth[-1]:
             breakpoint += 1
-            self.nodes_by_state[str(state.board)] = state.id
-            if ttt.is_end_copy(state.board) == "Player " + str(turn):
+            if ttt.is_end_copy(state.board) == "Player " + str(1):
                 self.nodes_by_id[self.nodes_by_state[str(state.board)]].value = 1
             elif ttt.is_end_copy(state.board) == 'Tie':
                 self.nodes_by_id[self.nodes_by_state[str(state.board)]].value = 0
@@ -46,7 +45,7 @@ class minimax:
                 breakpoint += 1
                 if len(state_id.children) == 0:
                     self.nodes_by_state[str(state_id.board)] = state_id.id
-                    if ttt.is_end_copy(state_id.board) == "Player " + str(turn):
+                    if ttt.is_end_copy(state_id.board) == "Player " + str(1):
                         self.nodes_by_id[self.nodes_by_state[str(state_id.board)]].value = 1
                     elif ttt.is_end_copy(state_id.board) == 'Tie':
                         self.nodes_by_id[self.nodes_by_state[str(state_id.board)]].value = 0
@@ -55,15 +54,16 @@ class minimax:
                 else:
                     turn = 1 if len(ttt.find_all(1,state_id.board)) == len(ttt.find_all(2,state_id.board)) else 2
                     childrens_worth = []
-
+                    
                     for child in state_id.children:
-                        childrens_worth.append(child.value)
+                        childrens_worth.append(self.nodes_by_id[child].value)
                     #maximizing
                     if turn == 1:
                         state_id.value = max(childrens_worth)
                     #minimizing
                     if turn == 2:
                         state_id.value = min(childrens_worth)
+
         print('done')
 
     def make_move(self,current_state):
@@ -82,7 +82,7 @@ class minimax:
             
 
 a = TicTacToeTree()
-b = minimax(a,1)
-a.recombining_node_tree()
-b.fit(1)
+b = minimax(a)
+b.fit()
+print(b.nodes_by_id[0].value)
 print('hi')
