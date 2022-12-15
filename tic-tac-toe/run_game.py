@@ -28,13 +28,13 @@ print(outcomes)
 score = {'Player 1':0,'Player 2':0,'Tie':0}
 score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
 
-for i in range(0,100):
-    a = Game(Player(jeff),Player(random_move))
-    b = Game(Player(random_move),Player(jeff))
+# for i in range(0,100):
+#     a = Game(Player(jeff),Player(random_move))
+#     b = Game(Player(random_move),Player(jeff))
 
-    score[a.game(log = True)] += 1
-    score2[b.game(log = True)] += 1
+#     score[a.game(log = True)] += 1
+#     score2[b.game(log = True)] += 1
 
 
-print(score)
-print(score2)
+# print(score)
+# print(score2)

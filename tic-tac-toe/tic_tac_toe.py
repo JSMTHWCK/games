@@ -29,7 +29,7 @@ class Game:
 
     def make_move(self,player):
 
-        a = self.players[self.turn].choose_move(list(self.board))
+        a = self.players[self.turn].make_move(list(self.board))
         if type(a) is tuple:
             a = list(a)
             a = a[0] * 3 + a[1]

@@ -1,15 +1,18 @@
 from tree import *
+from run_game import *
 def get_key(dict,val):
     for key, value in dict.items():
      if val == value:
         return key
 
 class minimax:
-    def __init__(self,tree):
+    def __init__(self,tree,player):
         self.tree = tree
         tree.recursion_recombining_node_tree()
         self.nodes_by_id = tree.nodes_by_id
         self.nodes_by_state = tree.nodes_by_state
+        self.player = player
+        self.fit()
 
     def find_key_by_value(self,dict,val):
         for key, value in dict.items():
@@ -67,22 +70,32 @@ class minimax:
         print('done')
 
     def make_move(self,current_state):
-        node_id = self.nodes_by_state[current_state]
-        if self.player == 1:
-            children_values = []
-            for child in self.nodes_by_id[node_id].children:
-                children_values.append(self.nodes_by_id[child].value)
-            max_value = max(children_values)
-            if max_value in children_values.remove(max_value):
-                for possible_winner in max_value:
-                    pass
-
+        node_id = self.nodes_by_state[str(current_state)]
+        #gets it's children
+        children_value = []
+        for child_id in self.nodes_by_id[node_id].children:
+            children_value.append(self.nodes_by_id[child_id].value)
+        best_move = max(children_value) if self.player == 1 else min(children_value)
+        #checks for immediate win
+        for child_id in self.nodes_by_id[node_id].children:
+            if self.player == 1:
+                if ttt.is_end_copy(self.nodes_by_id[child_id].board) == "Player 1":
+                    return ttt.difference_in_arrays(current_state,self.nodes_by_id[child_id].board)[0]
+            else:
+                if ttt.is_end_copy(self.nodes_by_id[child_id].board) == "Player 2":
+                    return ttt.difference_in_arrays(current_state,self.nodes_by_id[child_id].board)[0]
+        #if there are no immediate wins
+        move = children_value.index(best_move)
+        best_node_id = self.nodes_by_id[node_id].children[move]
+        return ttt.difference_in_arrays(current_state,self.nodes_by_id[best_node_id].board)[0]
+        
 
 
             
 
 a = TicTacToeTree()
-b = minimax(a)
-b.fit()
+b = minimax(a,1)
 print(b.nodes_by_id[0].value)
-print('hi')
+print(b.make_move([1,0,0,0,0,0,0,0,0]))
+a = ttt.Game(manual_move(),minimax(a,2))
+a.game(log = True)

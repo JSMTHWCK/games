@@ -59,4 +59,12 @@ def sum_of_values(list):
         a += int(i)
     return a
 
+def difference_in_arrays(arr1, arr2):
+    differences = []
+    for i in range(0,len(arr1)):
+        if arr1[i] != arr2[i]:
+            differences.append(i)
+    return differences
+
+
 print(possible_moves([1,2,2,1,2,1,2,0]))
