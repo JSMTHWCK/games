@@ -69,7 +69,7 @@ class minimax:
 
         print('done')
 
-    def make_move(self,current_state):
+    def choose_move(self,current_state):
         node_id = self.nodes_by_state[str(current_state)]
         #gets it's children
         children_value = []
@@ -95,7 +95,6 @@ class minimax:
 
 a = TicTacToeTree()
 b = minimax(a,1)
-print(b.nodes_by_id[0].value)
-print(b.make_move([1,0,0,0,0,0,0,0,0]))
+
 a = ttt.Game(manual_move(),minimax(a,2))
 a.game(log = True)

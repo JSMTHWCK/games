@@ -1,4 +1,6 @@
 from tic_tac_toe import *
+import sys
+sys.path.append(sys.path[0] + '/strats')
 import custom_strat
 from random_strat import random_move
 from ben import ben
@@ -28,6 +30,8 @@ print(outcomes)
 score = {'Player 1':0,'Player 2':0,'Tie':0}
 score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
 
+a = Game(Player(jeff),Player(random_move))
+a.game(log=True)
 # for i in range(0,100):
 #     a = Game(Player(jeff),Player(random_move))
 #     b = Game(Player(random_move),Player(jeff))

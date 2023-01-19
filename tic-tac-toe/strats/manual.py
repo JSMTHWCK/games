@@ -1,7 +1,7 @@
 from random import randrange
 
 class manual_move:
-    def make_move(self,board):
+    def choose_move(self,board):
         print('choose location ')
         x = int(input())
         while board[x] != 0:
