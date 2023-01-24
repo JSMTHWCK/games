@@ -59,5 +59,5 @@ class Node:
 
 
 a = CFourTree()
-a.recursion_recombining_node_tree(5,0)
-print(a.nodes_by_id)
+a.recursion_recombining_node_tree(2,0)
+print(len(a.nodes_by_id))

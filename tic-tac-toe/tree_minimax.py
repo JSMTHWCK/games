@@ -6,14 +6,20 @@ def get_key(dict,val):
         return key
 
 class minimax:
-    def __init__(self,tree,player):
-        self.tree = tree
-        tree.recursion_recombining_node_tree()
-        self.nodes_by_id = tree.nodes_by_id
-        self.nodes_by_state = tree.nodes_by_state
+    def __init__(self,player,depth):
         self.player = player
-        self.fit()
+        self.depth = depth
+        self.generate_new_tree(player,depth)
 
+    def generate_new_tree(self,player,depth,starting_node = 0):
+            self.tree = TicTacToeTree()
+            self.tree.recursion_recombining_node_tree(depth,starting_node)
+
+            self.nodes_by_id = self.tree.nodes_by_id
+            self.nodes_by_state = self.tree.nodes_by_state
+
+            self.fit()
+    
     def find_key_by_value(self,dict,val):
         for key, value in dict.items():
             if val == value:
@@ -67,9 +73,13 @@ class minimax:
                     if turn == 2:
                         state_id.value = min(childrens_worth)
 
-        print('done')
+        #print('done')
 
     def choose_move(self,current_state):
+        #just generating a new tree basically
+        self.generate_new_tree(self.player,self.depth)
+
+        #all of the actual choosing stuff goes here
         node_id = self.nodes_by_state[str(current_state)]
         #gets it's children
         children_value = []
@@ -93,8 +103,4 @@ class minimax:
 
             
 
-a = TicTacToeTree()
-b = minimax(a,1)
 
-a = ttt.Game(manual_move(),minimax(a,2))
-a.game(log = True)

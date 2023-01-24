@@ -63,13 +63,14 @@ class custom:
             if new_board[i][index] == 0:
                 new_board[i][index] = self.player
                 break
-        tot = 0
-        tot += self.sc_horz(new_board)
-        tot += self.sc_vert(new_board)
-        tot += self.sc_ldg(new_board)
         #tot += self.sc_rdg(board)
+        return self.score_board(new_board)
+    def score_board(self,board):
+        tot = 0
+        tot += self.sc_horz(board)
+        tot += self.sc_vert(board)
+        tot += self.sc_ldg(board)
         return tot
-
         
 
     def sc_horz(self,board):

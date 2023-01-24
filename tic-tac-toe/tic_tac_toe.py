@@ -1,13 +1,12 @@
 import random
 import sys
 sys.path.append(sys.path[0] + '/strats')
-print(sys.path)
 from helpers import *
 
 class Game:
     def __init__(self,strat1,strat2):
-        self.player1 = strat1()
-        self.player2 = strat2()
+        self.player1 = strat1
+        self.player2 = strat2
         self.players = [self.player1,self.player2]
         self.turn = 0
         self.board = [0 for i in range(0,9)]
