@@ -1,4 +1,10 @@
-import random
+"""
+Some functions, if used by strategies, will be made in helper
+
+"""
+
+
+
 import sys
 sys.path.append(sys.path[0] + '/strats')
 from helpers import *
@@ -35,6 +41,7 @@ class Game:
         if type(a) is tuple:
             a = list(a)
             a = a[0] * 3 + a[1]
+        print(a)
         self.moves.append(a)
         if self.board[a] == 0:
             self.board[a] = self.turn + 1

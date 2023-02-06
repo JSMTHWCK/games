@@ -5,13 +5,67 @@ README FOR FORMATTING:
     children and parents are stored in ID's
     for recombining, nodes are in order of DFS
 """
+
+
+
+class Node:
+    def __init__(self,node_id,board,depth = 0):
+        self.id = node_id
+        self.board = board
+        self.parents = []
+        self.children = []
+        self.depth = depth
+
+
 class TicTacToeTree:
     def __init__(self):
         self.nodes_by_id = {}
         self.nodes_by_state = {}
-        self.move = 1
+        #self.move = 1
+
+   
     
+    """ALL HELPERS START HERE"""
+    def add_possible_children(self,parent):
+        for i in ttt.possible_moves(parent.board):
+            self.move = 1 if len(ttt.find_all(1,parent.board)) == len(ttt.find_all(2,parent.board)) else 2
+            new_board = list(parent.board)
+            new_board[i] = self.move
+            if str(new_board) in self.nodes_by_state:
+                duplicate_node_id = self.nodes_by_state[str(new_board)]
+                self.nodes_by_id[duplicate_node_id].parents.append(parent.id)
+                parent.children.append(duplicate_node_id)
+            else:
+                new_node_id = len(self.nodes_by_id)
+                self.nodes_by_id[new_node_id] = Node(new_node_id,new_board,parent.depth + 1)
+                self.nodes_by_state[str(new_board)] = new_node_id
+                self.nodes_by_id[new_node_id].parents.append(parent.id)
+                parent.children.append(new_node_id)
+
+
+    def add_new_layer(self,starting_id):
+        terminal_children = self.get_terminal_children(starting_id)
+        for child_id in terminal_children:
+            child = self.nodes_by_id[child_id]
+            self.add_possible_children(child)
+
+    def get_terminal_children(self,starting_id):
+        all_children = [starting_id]
+        visited_children = [starting_id]
+        terminal_children = []
+        while len(all_children) != 0:
+            for child in self.nodes_by_id[all_children[0]].children:
+                if child not in visited_children:
+                    all_children.append(child)
+                    visited_children.append(child)
+            if len(self.nodes_by_id[all_children[0]].children) == 0:
+                terminal_children.append(all_children[0])
+            all_children.pop(0)
+        return list(set(terminal_children))
+
+    """ALL RUN FUNCTIONS GO HERE"""
     def node_tree(self):
+        #non recombining, non-recursive
         self.nodes_by_id = {}
         self.nodes_by_id[0] = Node(0,[0 for i in range(9)])
         queue = [self.nodes_by_id[0]]
@@ -35,7 +89,7 @@ class TicTacToeTree:
 
                 if ttt.is_end_copy(self.nodes_by_id[node_num].board) == False:
                     queue.append(self.nodes_by_id[node_num])
-    
+
 
     def recursion_recombining_node_tree(self,remaining_depth = 12, node_id = 0):
         if node_id == 0:  
@@ -59,6 +113,7 @@ class TicTacToeTree:
                     duplicate_node_id = self.nodes_by_state[str(new_board)]
                     self.nodes_by_id[duplicate_node_id].parents.append(node_id)
                     node.children.append(duplicate_node_id)
+
                 else:
                     new_node_id = len(self.nodes_by_id)
                     self.nodes_by_id[new_node_id] = Node(new_node_id,new_board, node.depth + 1)
@@ -66,43 +121,13 @@ class TicTacToeTree:
                     self.nodes_by_id[new_node_id].parents.append(node_id)
                     node.children.append(new_node_id)
                     self.recursion_recombining_node_tree(remaining_depth - 1, new_node_id)
-                #everything above here is fine
 
-    def recombining_node_tree(self):
-        self.nodes_by_id = {}
-        self.nodes_by_id[0] = Node(0,[0 for i in range(0,9)])
-        boards = [[0 for i in range(0,9)]]
-        queue = [self.nodes_by_id[0]]
-        node_num = 0
-        while len(queue) != 0:
-            last_node = queue[0]
-            last_move = list(last_node.board)
-            queue.pop(0)
-            self.move = 1 if len(ttt.find_all(1,last_move)) == len(ttt.find_all(2,last_move)) else 2
-            for i in ttt.possible_moves(last_move):
-                new_board = list(last_move)
-                new_board[i] = self.move
-                if new_board not in boards:
-                    boards.append(new_board)
-                    node_num += 1
-                    self.nodes_by_id[node_num] = Node(node_num,new_board)
-                    #children and parents
-                    self.nodes_by_id[node_num].parents.append(last_node)
-                    last_node.children.append(self.nodes_by_id[node_num])
 
-                    if ttt.is_end_copy(new_board) == False:
-                        queue.append(self.nodes_by_id[node_num])
 
+
+
+    
+   
                     
-        
-class Node:
-    def __init__(self,node_id,board,depth = 0):
-        self.id = node_id
-        self.board = board
-        self.parents = []
-        self.children = []
-        self.depth = depth
 
-a = TicTacToeTree()
-a.recursion_recombining_node_tree()
-print(len(a.nodes_by_id))
+"""BELOW HERE IS FOR TESTING"""
