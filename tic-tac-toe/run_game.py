@@ -1,14 +1,15 @@
 from tic_tac_toe import *
 import sys
+from tree_minimax import minimax
 sys.path.append(sys.path[0] + '/strats')
-import custom_strat
-from random_strat import random_move
-from ben import ben
-from elias import elias
+from custom_strat import custom
+from random_strat import RandomMove
+from ben import Ben
+from elias import Elias
 from manual import manual_move
 from smthwck import jeff
 from player import Player
-from celeste import celeste
+from celeste import Celeste
 from christine import christine
 '''
 outcomes = {'jeff' : 0, 'celeste' : 0, 'Tie' : 0}
@@ -30,15 +31,5 @@ print(outcomes)
 score = {'Player 1':0,'Player 2':0,'Tie':0}
 score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
 
-a = Game(Player(jeff),Player(random_move))
+a = Game(minimax(1),custom())
 a.game(log=True)
-# for i in range(0,100):
-#     a = Game(Player(jeff),Player(random_move))
-#     b = Game(Player(random_move),Player(jeff))
-
-#     score[a.game(log = True)] += 1
-#     score2[b.game(log = True)] += 1
-
-
-# print(score)
-# print(score2)

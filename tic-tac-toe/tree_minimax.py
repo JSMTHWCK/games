@@ -1,12 +1,12 @@
 from tree import *
-from run_game import *
 def get_key(dict,val):
     for key, value in dict.items():
      if val == value:
         return key
 
 class minimax:
-    def __init__(self,tree,player):
+    def __init__(self,player):
+        tree = TicTacToeTree()
         self.tree = tree
         tree.recursion_recombining_node_tree()
         self.nodes_by_id = tree.nodes_by_id
@@ -93,8 +93,4 @@ class minimax:
 
             
 
-a = TicTacToeTree()
-b = minimax(a,1)
 
-a = ttt.Game(manual_move(),minimax(a,2))
-a.game(log = True)
