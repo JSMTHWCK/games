@@ -1,6 +1,7 @@
 from tic_tac_toe import *
 import sys
 from tree_minimax import minimax
+from tree_minimax import tic_tac_toe_heuristic
 sys.path.append(sys.path[0] + '/strats')
 from custom_strat import custom
 from random_strat import RandomMove
@@ -31,5 +32,5 @@ print(outcomes)
 score = {'Player 1':0,'Player 2':0,'Tie':0}
 score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
 
-a = Game(minimax(1),custom())
+a = Game(tic_tac_toe_heuristic(1,8), RandomMove())
 a.game(log=True)
