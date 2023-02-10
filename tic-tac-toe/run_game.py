@@ -12,25 +12,30 @@ from smthwck import jeff
 from player import Player
 from celeste import Celeste
 from christine import christine
-'''
-outcomes = {'jeff' : 0, 'celeste' : 0, 'Tie' : 0}
-past = {}
-strat = 1
-for i in range(0,200):
-    if i%1000 == 0:
-        print(i)
+
+
+score = {'heuristic':0,'minimax':0,'Tie':0}
+
+for i in range(0,20):
+    print(i)
     if i%2 == 0:
-        a = Game(Player(jeff),Player(strategy_function))
-        player_order = {'Tie': 'Tie', 'Player 1': 'jeff', 'Player 2': 'celeste'}
+        a = Game(tic_tac_toe_heuristic(1,2),minimax(2))
+        player_order = {'Tie': 'Tie', 'Player 1': 'heuristic', 'Player 2': 'minimax'}
     else:
-        a = Game(Player(strategy_function),Player(jeff))
-        player_order = {'Tie': 'Tie', 'Player 1': "celeste", 'Player 2': 'jeff'}
-    outcomes[player_order[a.game()]] += 1
-print(outcomes)
-'''
+        a = Game(minimax(1),tic_tac_toe_heuristic(2,2))
+        player_order = {'Tie': 'Tie', 'Player 1': "minimax", 'Player 2': 'heuristic'}
+    score[player_order[a.game()]] += 1
+print(score)
 
-score = {'Player 1':0,'Player 2':0,'Tie':0}
-score2 = {'Player 1' : 0, 'Player 2':0,'Tie':0}
+score = {'heuristic':0,'random':0,'Tie':0}
 
-a = Game(tic_tac_toe_heuristic(1,8), RandomMove())
-a.game(log=True)
+for i in range(0,20):
+    print(i)
+    if i%2 == 0:
+        a = Game(tic_tac_toe_heuristic(1,2),RandomMove())
+        player_order = {'Tie': 'Tie', 'Player 1': 'heuristic', 'Player 2': 'random'}
+    else:
+        a = Game(RandomMove(),tic_tac_toe_heuristic(2,2))
+        player_order = {'Tie': 'Tie', 'Player 1': "random", 'Player 2': 'heuristic'}
+    score[player_order[a.game()]] += 1
+print(score)

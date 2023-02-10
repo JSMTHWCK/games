@@ -1,9 +1,4 @@
 from tree import *
-
-def get_key(dict,val):
-    for key, value in dict.items():
-     if val == value:
-        return key
 class minimax:
     def __init__(self,player):
         tree = TicTacToeTree()
@@ -14,10 +9,7 @@ class minimax:
         self.player = player
         self.fit()
 
-    def find_key_by_value(self,dict,val):
-        for key, value in dict.items():
-            if val == value:
-                return key
+    
     def sort_node_by_depth(self,nodes_by_id):
         max_depth = 0
         #finds max depth
@@ -97,16 +89,12 @@ class tic_tac_toe_heuristic:
     def generate_new_tree(self,player,depth,starting_node = 0):
             self.tree = TicTacToeTree()
             self.tree.recursion_recombining_node_tree(depth,starting_node)
-            print(len(self.tree.nodes_by_id))
             self.nodes_by_id = self.tree.nodes_by_id
             self.nodes_by_state = self.tree.nodes_by_state
 
             self.fit()
     
-    def find_key_by_value(self,dict,val):
-        for key, value in dict.items():
-            if val == value:
-                return key
+    
     def sort_node_by_depth(self,nodes_by_id):
         max_depth = 0
         #finds max depth
@@ -156,8 +144,6 @@ class tic_tac_toe_heuristic:
                         self.tree.nodes_by_state[str(new_board)] = new_node_id
                         self.tree.nodes_by_id[new_node_id].parents.append(child)
                         node.children.append(new_node_id)
-        # self.nodes_by_id = self.tree.nodes_by_id
-        # self.nodes_by_state = self.tree.nodes_by_state
 
 
 
@@ -200,14 +186,11 @@ class tic_tac_toe_heuristic:
         #print('done')
 
     def choose_move(self,current_state):
-        print(current_state)
-        #just generating a new tree basically
-        #all of the actual choosing stuff goes here
+        #adds layers
         node_id = self.nodes_by_state[str(current_state)]
         if node_id != 0:
             self.add_new_layer(node_id)
             self.add_new_layer(node_id)
-            # self.nodes_by_state = self.tree.nodes_by_state
         self.fit()
         #gets it's children
         children_value = []

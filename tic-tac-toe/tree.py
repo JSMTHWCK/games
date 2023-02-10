@@ -105,4 +105,3 @@ class Node:
 
 a = TicTacToeTree()
 a.recursion_recombining_node_tree()
-print(len(a.nodes_by_id))

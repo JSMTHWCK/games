@@ -1,7 +1,6 @@
 import random
 import sys
 sys.path.append(sys.path[0] + '/strats')
-print(sys.path)
 from helpers import *
 
 class Game:
