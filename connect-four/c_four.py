@@ -1,9 +1,8 @@
-from player import *
 """
-certain parts are seperated for easy access in c_four_tree.py
-efficiency is not key here
+copy is used just for copy nest, instead of copy_nest function
+"""
+import copy
 
-"""
 class Game:
 
     def __init__(self,player_one, player_two):
@@ -16,24 +15,22 @@ class Game:
             print(row)
         print('')
     
-    def copy_nest(self,board):
-        new_list = []
-        for row in board:
-            new_list.append(list(row))
-        return new_list
 
     def update_board(self,board,col,turn):
         for row in range(5,-1,-1):
             if board[row][col] == 0:
                 board[row][col] = turn
                 return board
+        print("invalid move, turn skipped")
+        return board
 
 
     def make_move(self):
         self.turn = self.turn %2 + 1
         player = self.players[self.turn - 1]
-        player_move = player.choose_move(self.copy_nest(self.board))
-        self.board = self.update_board(self.copy_nest(self.board),player_move,int(self.turn))
+        board_copy = copy.copy(self.board)
+        player_move = player.choose_move(board_copy)
+        self.board = self.update_board(board_copy,player_move,int(self.turn))
 
     def find_possible_moves(self,board):
         possible_moves = []
@@ -85,8 +82,8 @@ class Game:
         while True:
             if log == True:
                 self.print_board()
-            if self.is_end(list(self.board)) != False:
-                return self.is_end(list(self.board))
+            if self.is_end(copy.copy(self.board)) != False:
+                return self.is_end(copy.copy(self.board))
             self.make_move()
         
             

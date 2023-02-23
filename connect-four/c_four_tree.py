@@ -1,4 +1,5 @@
-from c_four import Game
+from c_four import *
+import copy
 """
 README FOR FORMATTING: 
     boards are stored as a 6 7 entry array
@@ -26,18 +27,18 @@ class CFourTree:
             self.nodes_by_id[0] = Node(0,[[0 for i in range(7)] for i in range(6)])
             self.nodes_by_state = {}
             self.nodes_by_state[str([[0 for i in range(7)] for i in range(6)])] = 0
-        board = Game.copy_nest(self,self.nodes_by_id[node_id].board)
+        board = copy.deepcopy(self.nodes_by_id[node_id].board)
         if remaining_depth != 0 and Game.is_end(self,board) == False:
             #setup stuff
             node = self.nodes_by_id[node_id]
-            last_state = Game.copy_nest(self,node.board)
+            last_state = copy.copy(node.board)
             player_to_move = self.find_player_turn(last_state)
             #children
             for possible_move in Game.find_possible_moves(self,last_state):
-                possible_state = Game.update_board(self,Game.copy_nest(self,last_state),possible_move,player_to_move)
+                possible_state = Game.update_board(self,copy.deepcopy(last_state),possible_move,player_to_move)
                 if str(possible_state) not in self.nodes_by_state:
                     new_id = len(self.nodes_by_id) 
-                    self.nodes_by_id[new_id] = Node(new_id,possible_state,remaining_depth-1)
+                    self.nodes_by_id[new_id] = Node(new_id,possible_state,node.depth + 1)
                     self.nodes_by_state[str(possible_state)] = new_id
                     self.nodes_by_id[new_id].parents.append(node_id)
                     self.recursion_recombining_node_tree(remaining_depth-1,new_id)
@@ -58,6 +59,3 @@ class Node:
         self.depth = depth
 
 
-a = CFourTree()
-a.recursion_recombining_node_tree(5,0)
-print(a.nodes_by_id)

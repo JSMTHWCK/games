@@ -1,1 +1,2 @@
-Need to get rid of the player class thing
+for connect four
+need to move strategies to own class.

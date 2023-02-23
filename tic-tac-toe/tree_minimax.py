@@ -84,11 +84,11 @@ class tic_tac_toe_heuristic:
     def __init__(self,player,depth):
         self.player = player
         self.depth = depth
-        self.generate_new_tree(player,depth)
+        self.generate_new_tree(depth)
 
-    def generate_new_tree(self,player,depth,starting_node = 0):
+    def generate_new_tree(self,depth):
             self.tree = TicTacToeTree()
-            self.tree.recursion_recombining_node_tree(depth,starting_node)
+            self.tree.recursion_recombining_node_tree(depth)
             self.nodes_by_id = self.tree.nodes_by_id
             self.nodes_by_state = self.tree.nodes_by_state
 
