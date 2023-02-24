@@ -69,7 +69,7 @@ class minimaxHeuristic:
 a = minimaxHeuristic(1,4)
 a.fit()
 print(len(a.nodes_by_id))
-
+#ignore this
 
 
 
