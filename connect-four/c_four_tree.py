@@ -41,6 +41,7 @@ class CFourTree:
                     self.nodes_by_id[new_id] = Node(new_id,possible_state,node.depth + 1)
                     self.nodes_by_state[str(possible_state)] = new_id
                     self.nodes_by_id[new_id].parents.append(node_id)
+                    self.nodes_by_id[node_id].children.append(new_id)
                     self.recursion_recombining_node_tree(remaining_depth-1,new_id)
 
                 else:

@@ -1,3 +1,4 @@
+import copy as copy
 class custom:
     def __init__(self):
         self.game_turn = None
@@ -16,11 +17,6 @@ class custom:
                 ind.append(i)
         return ind
 
-    def nest_copy(self,board):
-        new_list = []
-        for i in board:
-            new_list.append(list(i))
-        return new_list
 
     def choose_move(self,board):
         if self.game_turn == None:
@@ -49,16 +45,16 @@ class custom:
             else:
                 return board[-1].index(2)
         scores = []
-        for i in self.open_columns(self.nest_copy(board)):
+        for i in self.open_columns(copy.deepcopy(board)):
             if i == 3:
-                scores.append(self.fake_boards(self.nest_copy(board),i) * 5)
+                scores.append(self.fake_boards(copy.deepcopy(board),i) * 5)
             else:
-                scores.append(self.fake_boards(self.nest_copy(board),i))
+                scores.append(self.fake_boards(copy.deepcopy(board),i))
 
         return self.open_columns(board)[scores.index(max(scores))]
 
     def fake_boards(self,board,index):
-        new_board = self.nest_copy(board)
+        new_board = copy.deepcopy(board)
         for i in range(5,-1,-1):
             if new_board[i][index] == 0:
                 new_board[i][index] = self.player
@@ -76,13 +72,20 @@ class custom:
         tot = 0
         for i in range(0,len(board)):
             for j in range(0,len(board[0]) -4):
-                nboard = board[i][j:j+4]
-                a = 4 - len(self.get_all(nboard,0))
+                arr = board[i][j:j+4]
+                a = 4 - len(self.get_all(arr,1))
                 if a == 4:
                     tot += 100
-                if a == 3 and 0 in nboard:
+                if a == 3 and 0 in arr:
                     tot += 15
-                if a == 2 and 0 in nboard:
+                if a == 2 and 0 in arr:
+                    tot += 7
+                a = 4 - len(self.get_all(arr,2))
+                if a == 4:
+                    tot += 100
+                if a == 3 and 0 in arr:
+                    tot += 15
+                if a == 2 and 0 in arr:
                     tot += 7
         return tot
 
@@ -93,7 +96,14 @@ class custom:
                 arr = []
                 for a in range(4):
                     arr.append(board[i+a][j])
-                a = 4 - len(self.get_all(arr,0))
+                a = 4 - len(self.get_all(arr,1))
+                if a == 4:
+                    tot += 100
+                if a == 3 and 0 in arr:
+                    tot += 15
+                if a == 2 and 0 in arr:
+                    tot += 7
+                a = 4 - len(self.get_all(arr,2))
                 if a == 4:
                     tot += 100
                 if a == 3 and 0 in arr:
@@ -110,13 +120,20 @@ class custom:
                 arr = []
                 for a in range(4):
                     arr.append(board[i+a][j+a])
-                a = 4 - len(self.get_all(arr,0))
+                a = 4 - len(self.get_all(arr,1))
                 if a == 4:
                     tot += 100
                 if a == 3 and 0 in arr:
                     tot += 15
                 if a == 2 and 0 in arr:
-                    tot += 7 
+                    tot += 7
+                a = 4 - len(self.get_all(arr,2))
+                if a == 4:
+                    tot += 100
+                if a == 3 and 0 in arr:
+                    tot += 15
+                if a == 2 and 0 in arr:
+                    tot += 7
         return tot
 
         

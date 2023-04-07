@@ -21,7 +21,11 @@ class Game:
             if board[row][col] == 0:
                 board[row][col] = turn
                 return board
+        
+        self.print_board()
         print("invalid move, turn skipped")
+        print("player is ",self.turn)
+        print('move was made by ',self.players)
         return board
 
 
@@ -68,7 +72,7 @@ class Game:
         #diagonal (/)
         for row in range(5,2,-1):
             for col in range(0,4):
-                last_piece == board[row][col]
+                last_piece = board[row][col]
                 if last_piece == 0:
                     continue
                 elif last_piece == board[row-1][col+1] == board[row-2][col+2] == board[row-3][col+3]:
@@ -81,6 +85,7 @@ class Game:
     def game(self,log = False):
         while True:
             if log == True:
+                print(self.turn)
                 self.print_board()
             if self.is_end(copy.copy(self.board)) != False:
                 return self.is_end(copy.copy(self.board))
