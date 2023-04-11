@@ -1,7 +1,9 @@
 import copy
 import random as rng
 class lastMinute:
-    def __init__(self,player):
+    def __init__(self,player,gamenum = None):
+        if gamenum != 0:
+            rng.seed(gamenum)
         self.player = player
 
     def next_turn_end(self,board):

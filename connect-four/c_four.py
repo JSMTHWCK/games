@@ -1,7 +1,9 @@
 """
 copy is used just for copy nest, instead of copy_nest function
+time is used for debugging purposes
 """
 import copy
+import time
 
 class Game:
 
@@ -87,8 +89,12 @@ class Game:
             if log == True:
                 print(self.turn)
                 self.print_board()
+            start = time.time()
             if self.is_end(copy.copy(self.board)) != False:
                 return self.is_end(copy.copy(self.board))
             self.make_move()
+            elapsed = time.time() - start
+            if elapsed > 1:
+                print('player ', self.turn, " took ",elapsed ,"seconds")
         
             

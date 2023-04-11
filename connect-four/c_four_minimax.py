@@ -1,6 +1,7 @@
 from c_four_tree import * 
 import random as rng
 import numpy as np
+import time
 class minimaxHeuristic:
     def __init__(self,player,depth):
         self.player = player
@@ -74,7 +75,7 @@ class minimaxHeuristic:
         queue = [starting_node_id]
         #gets terminal children
         while len(queue) != 0:
-            if queue[0] in self.nodes_by_depth[max_depth -1]:
+            if self.nodes_by_id[queue[0]].children == []:
                 terminal_children.append(queue[0])
             else:
                 for child in self.nodes_by_id[queue[0]].children:
@@ -96,11 +97,23 @@ class minimaxHeuristic:
                         self.tree.nodes_by_id[duplicate_node_id].parents.append(child)
                         node.children.append(duplicate_node_id)
                     else:
-                        new_node_id = len(self.tree.nodes_by_id)
+                        #finds max new node id
+                        new_node_id = len(self.nodes_by_state)
+                        #fits new node
                         self.tree.nodes_by_id[new_node_id] = Node(new_node_id,new_board,node.depth + 1)
                         self.tree.nodes_by_state[str(new_board)] = new_node_id
                         self.tree.nodes_by_id[new_node_id].parents.append(child)
                         node.children.append(new_node_id)
+
+    def prune_tree(self,starting_id):
+        pruned_tree = {}
+        queue = [starting_id]
+        while len(queue) != 0:
+            pruned_tree[queue[0]] = self.tree.nodes_by_id[queue[0]]
+            for child in self.tree.nodes_by_id[queue[0]].children:
+                queue.append(child)
+            queue.pop(0)
+        self.tree.nodes_by_id = pruned_tree
 
     def find_last_move(self,board1,board2):
         for i in range(0,len(board1)):
@@ -143,6 +156,7 @@ class minimaxHeuristic:
         if node_id != 0:
             self.add_new_layer(node_id)
             self.add_new_layer(node_id)
+            self.prune_tree(node_id)
         self.fit()
         #gets children
         children = []
@@ -154,15 +168,15 @@ class minimaxHeuristic:
             else:
                 children_value.append(self.nodes_by_id[child_id].value)
 
-        for child in range(len(children_value)):
-            print("-----")
-            print("child is ", children[child])
-            print("child has " + str(len(self.nodes_by_id[children[child]].children)) + " children")
-            print("board is ", self.nodes_by_id[children[child]].board)
-            print("heuristic value is ", children_value[child])
+        # for child in range(len(children_value)):
+        #     print("-----")
+        #     print("child is ", children[child])
+        #     print("child has " + str(len(self.nodes_by_id[children[child]].children)) + " children")
+        #     print("board is ", self.nodes_by_id[children[child]].board)
+        #     print("heuristic value is ", children_value[child])
             
 
-            print("-----")
+        #     print("-----")
 
         best_move = max(children_value) if self.player == 1 else min(children_value)
         move = children_value.index(best_move)
